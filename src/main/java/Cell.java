@@ -1,7 +1,7 @@
 /**
  * @author  Dawid Janik
  *
- *
+ * todo private
  */
 public class Cell {
 
@@ -10,12 +10,13 @@ public class Cell {
     public String  noMine = "";
 
     public String value = "";
-    public String hintValue = "";
+    public Integer hintValue = 0;
 
 //===================================================================
 //Constructors()
 
     public Cell() {
+        super();
     }
 
     public Cell(Cell cell) {
@@ -26,9 +27,6 @@ public class Cell {
 
     }
 
-
-
-
     public Cell(Boolean isMine, String mine, String noMine) {
         this.isMine = isMine;
         this.mine = mine;
@@ -37,7 +35,7 @@ public class Cell {
 
 
 //===================================================================
-//
+//Methods
     @Override
     public String toString() {
         return "Cell{" +
@@ -46,6 +44,8 @@ public class Cell {
                 //", noMine='" + noMine + '\'' +
                 '}';
     }
+
+
 
 
 } // End of Cell
