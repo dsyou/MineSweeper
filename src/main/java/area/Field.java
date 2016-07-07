@@ -35,13 +35,14 @@ public class Field implements MineSweeper { //todo throws Illegal
      * @throws IllegalArgumentException if mineField is not properly formatted
      */
     @Override
-    public void setMineField(String mineField) throws IllegalArgumentException {
+    public void setMineField(String mineField) throws IllegalStateException {
 
 
         String[] lines = StringUtils.split(mineField, System.lineSeparator()); // Split Input string at \n character
         n = lines.length;       //set the height
         m = lines[0].length();  //set the width
 
+        checkMineFieldStructure(lines);
         System.out.println("n x m: " + n + " x " + m ); //Show size of area.Field
 
         this.area = new Cell[n][m]; //  Create game area[n x m] with area.Cell's
@@ -50,7 +51,7 @@ public class Field implements MineSweeper { //todo throws Illegal
         for(int i=0; i<n;i++){ //height
             for (int j=0; j<m;j++){ //width
 
-                area[i][j] = new Cell();
+                area[i][j] = new Cell();//initialization of the current field point with new Cell()
 
                 if(String.valueOf(lines[i].charAt(j)).equals("*")) {
                     area[i][j].isMine = true; // e.g. * . . . \n
@@ -67,9 +68,39 @@ public class Field implements MineSweeper { //todo throws Illegal
 
     }
 
+    /**
+     * This method is checking properly formatted mineField input.
+     * Accepted input must have only two characters:
+     * "*" - mine field
+     * "." - not mine field
+     * If any else occur throw exception.
+     * However this method also check that following input is empty,
+     * or short/to long.
+     *
+     * @exception IllegalArgumentException with proper Message
+     * @param lines array divided mineField input string
+     */
+    private void checkMineFieldStructure(String[] lines) {
+
+        if(lines.length == 0){
+            throw  new IllegalArgumentException("Input cannot be empty");
+        }
+
+         for (int i=0; i<lines.length; i++){
+            if(lines[i].length() != m){
+                throw  new IllegalArgumentException("Input characters size is not proper");
+            }
+         }
+        for(int i=0; i<lines.length; i++) {
+            if ( !StringUtils.containsOnly(lines[i], '*','.') ){
+                throw new IllegalArgumentException("Invalid value in input string");
+            }
+        }
+    }
+
 
     /**
-     * @Override method taken form run.MineSweeper interface
+     * Implementation of method taken form run.MineSweeper interface
      *
      * @return a string representation of the hint-field
      * @throws IllegalStateException if the mine-field has not been initialised (i.e. setMineField() has not been called)
@@ -77,6 +108,9 @@ public class Field implements MineSweeper { //todo throws Illegal
     @Override
     public String getHintField() throws IllegalStateException {
 
+        if((area == null)){
+            throw new IllegalArgumentException("Method setMineFiled() has not been called");
+        }
         for(int i=0; i<n; i++){
           for(int j=0; j<m; j++){
              List<Cell> l = getNeighbors(i,j); //Get neighbors surrounding current area.Cell
