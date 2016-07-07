@@ -1,8 +1,8 @@
+package run;
+
 /**
  * Created by Dawid on 2016-07-05.
- *
- *
- *
+ * @author X-Formation
  */
 public interface MineSweeper {
 
