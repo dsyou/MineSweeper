@@ -16,15 +16,13 @@ where each square is a '\*' for a mine or the number of adjacent mine-squares if
 ##How to play
 Once you have cloned the directory to your local machine, follow the directions below:  
 
-1. You can set a mine-filed by two different ways directly from main`setMineField("*...\n..*.\n....")` class or
-with first program arguments args[0]. Proper example mine-field string is "\*...\n..\*.\n...."
+1. You can set a mine-filed by two different ways directly from main class `setMineField("*...\n..*.\n....")` 
+ or with first program arguments args[0]. Proper example mine-field string is "\*...\n..\*.\n...."
 
 2. After entering a mine-field program will be produces a hint-filed of identical dimensions as the input.  
 Example output for above input is "\*211\n12*1\n0111"
 
 
-
-##License
 
 ##Author
 Dawid Janik
