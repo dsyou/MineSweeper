@@ -1,8 +1,9 @@
-package run;
+package pl.minesweeper.core;
 
 /**
- * Created by Dawid on 2016-07-05.
  * @author X-Formation
+ *
+ * @since 2016-07-05
  */
 public interface MineSweeper {
 

@@ -1,36 +1,27 @@
-package area;
+package pl.minesweeper.core;
 
 import org.apache.commons.lang3.StringUtils;
-import run.MineSweeper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * <h1>Create game  area/field</h1>
- *  The area.Field Class implements an game field for this purpose
- *  simply uses two-dimensional array of area.Cell(the smallest unit of field)
- *
  * @author Dawid Janik
+ * @since 20.03.2018
  */
-public class Field implements MineSweeper { //todo throws Illegal
+public class MineSweeperImpl implements MineSweeper {
+    @Override
+    public void setMineField(String mineField) throws IllegalArgumentException {
 
-
-    private Cell[][] area;
-
-    private Integer n; // n - lines of field
-    private Integer m; // m - characters per one-n-line
-
-    public Field(){
-        super();
     }
 
-//===================================================================
-//Interface @Override
+    @Override
+    public String getHintField() throws IllegalStateException {
+        return null;
+    }
 
     /**
-     * Implementation of interface method used to generate game area/field
+     * Implementation of interface method used to generate game pl.minesweeper.area/field
      * @param mineField string containing the mines
      * @throws IllegalArgumentException if mineField is not properly formatted
      */
@@ -43,11 +34,11 @@ public class Field implements MineSweeper { //todo throws Illegal
         m = lines[0].length();  //set the width
 
         checkMineFieldStructure(lines);
-        System.out.println("n x m: " + n + " x " + m ); //Show size of area.Field
+        System.out.println("n x m: " + n + " x " + m ); //Show size of pl.minesweeper.area.Field
 
-        this.area = new Cell[n][m]; //  Create game area[n x m] with area.Cell's
+        this.area = new Cell[n][m]; //  Create game pl.minesweeper.area[n x m] with pl.minesweeper.area.Cell's
 
-        // Fill game area with proper game value taken from input String
+        // Fill game pl.minesweeper.area with proper game value taken from input String
         for(int i=0; i<n;i++){ //height
             for (int j=0; j<m;j++){ //width
 
@@ -57,7 +48,7 @@ public class Field implements MineSweeper { //todo throws Illegal
                     area[i][j].isMine = true; // e.g. * . . . \n
                     area[i][j].value = "*";
                 }
-               if(String.valueOf(lines[i].charAt(j)).equals(".")) {
+                if(String.valueOf(lines[i].charAt(j)).equals(".")) {
                     area[i][j].isMine = false;
                     area[i][j].value = ".";
                 }
@@ -86,11 +77,11 @@ public class Field implements MineSweeper { //todo throws Illegal
             throw  new IllegalArgumentException("Input cannot be empty");
         }
 
-         for (int i=0; i<lines.length; i++){
+        for (int i=0; i<lines.length; i++){
             if(lines[i].length() != m){
                 throw  new IllegalArgumentException("Input characters size is not proper");
             }
-         }
+        }
         for(int i=0; i<lines.length; i++) {
             if ( !StringUtils.containsOnly(lines[i], '*','.') ){
                 throw new IllegalArgumentException("Invalid value in input string");
@@ -100,7 +91,7 @@ public class Field implements MineSweeper { //todo throws Illegal
 
 
     /**
-     * Implementation of method taken form run.MineSweeper interface
+     * Implementation of method taken form pl.minesweeper.core.MineSweeper interface
      *
      * @return a string representation of the hint-field
      * @throws IllegalStateException if the mine-field has not been initialised (i.e. setMineField() has not been called)
@@ -112,24 +103,24 @@ public class Field implements MineSweeper { //todo throws Illegal
             throw new IllegalArgumentException("Method setMineFiled() has not been called");
         }
         for(int i=0; i<n; i++){
-          for(int j=0; j<m; j++){
-             List<Cell> l = getNeighbors(i,j); //Get neighbors surrounding current area.Cell
-              //System.out.println("L.size()"+l.size()); //Show me list.size() of incoming neighbors
-              if (l == null){
-                  System.err.println("Error Null Neighbors list"); // This situation should never happen
-                  System.exit(-1); // Exit immediately
-              }
+            for(int j=0; j<m; j++){
+                List<Cell> l = getNeighbors(i,j); //Get neighbors surrounding current pl.minesweeper.area.Cell
+                //System.out.println("L.size()"+l.size()); //Show me list.size() of incoming neighbors
+                if (l == null){
+                    System.err.println("Error Null Neighbors list"); // This situation should never happen
+                    System.exit(-1); // Exit immediately
+                }
 
-              if (l.size() != 0){ //Check list size: 0-mines, 8-no mine cell
-                  for(int n=0; n<8; n++){
+                if (l.size() != 0){ //Check list size: 0-mines, 8-no mine cell
+                    for(int n=0; n<8; n++){
 
-                      if(l.get(n).isMine){ // If the neighbor is Mine increment current cell.hintValue
-                          //System.out.println("Add +1");
-                          this.area[i][j].hintValue = this.area[i][j].hintValue +1;//++ ;
-                      }
+                        if(l.get(n).isMine){ // If the neighbor is Mine increment current cell.hintValue
+                            //System.out.println("Add +1");
+                            this.area[i][j].hintValue = this.area[i][j].hintValue +1;//++ ;
+                        }
 
-                  }
-              }
+                    }
+                }
 
             }//j
         }//i
@@ -152,7 +143,7 @@ public class Field implements MineSweeper { //todo throws Illegal
         List<Cell> neighbors = new ArrayList<Cell>();
 
         if (this.area[i][j].isMine){
-            System.out.println("Left area.Cell with Mine " + "I=" + i + " J=" + j); // Mine cell return 0-elements list
+            System.out.println("Left pl.minesweeper.area.Cell with Mine " + "I=" + i + " J=" + j); // Mine cell return 0-elements list
         }
         if (!this.area[i][j].isMine) { // If not mine check neighbors
 
@@ -164,9 +155,9 @@ public class Field implements MineSweeper { //todo throws Illegal
 
 
             /**
-             * Each cell has 8 neighbors on game area.
+             * Each cell has 8 neighbors on game pl.minesweeper.area.
              * If the cell is on the edge (e.g [0,0]), and want take neighbor on the illegal position
-             * Throw Exception, replace this neighbor with new area.Cell (not-mine).
+             * Throw Exception, replace this neighbor with new pl.minesweeper.area.Cell (not-mine).
              * Non-periodic bound condition
              * Position are:
              * 0 - left top; 1- central top; 2- right top; 3-right center;
@@ -181,65 +172,65 @@ public class Field implements MineSweeper { //todo throws Illegal
                 switch (ii) {
                     case 0:
                         try{
-                        neighbors.add(new Cell(this.area[top_y][left_x]));
+                            neighbors.add(new Cell(this.area[top_y][left_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 0");
+//                            System.out.println("pl.minesweeper.area.Cell 0");
                             neighbors.add(new Cell());
-                         }
+                        }
                         break;
                     case 1:
                         try{
-                        neighbors.add(new Cell(this.area[top_y][j]));
+                            neighbors.add(new Cell(this.area[top_y][j]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 1");
+//                            System.out.println("pl.minesweeper.area.Cell 1");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 2:
                         try{
-                        neighbors.add(new Cell(this.area[top_y][right_x]));
+                            neighbors.add(new Cell(this.area[top_y][right_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 2");
+//                            System.out.println("pl.minesweeper.area.Cell 2");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 3:
                         try{
-                        neighbors.add(new Cell(this.area[i][right_x]));
+                            neighbors.add(new Cell(this.area[i][right_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 3");
+//                            System.out.println("pl.minesweeper.area.Cell 3");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 4:
                         try{
-                        neighbors.add(new Cell(this.area[bottom_y][right_x]));
+                            neighbors.add(new Cell(this.area[bottom_y][right_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 4");
+//                            System.out.println("pl.minesweeper.area.Cell 4");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 5:
                         try{
-                        neighbors.add(new Cell(this.area[bottom_y][j]));
+                            neighbors.add(new Cell(this.area[bottom_y][j]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 5");
+//                            System.out.println("pl.minesweeper.area.Cell 5");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 6:
                         try{
-                        neighbors.add(new Cell(this.area[bottom_y][left_x]));
+                            neighbors.add(new Cell(this.area[bottom_y][left_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 6");
+//                            System.out.println("pl.minesweeper.area.Cell 6");
                             neighbors.add(new Cell());
                         }
                         break;
                     case 7:
                         try{
-                        neighbors.add(new Cell(this.area[i][left_x]));
+                            neighbors.add(new Cell(this.area[i][left_x]));
                         }catch(ArrayIndexOutOfBoundsException e){
-//                            System.out.println("area.Cell 7");
+//                            System.out.println("pl.minesweeper.area.Cell 7");
                             neighbors.add(new Cell());
                         }
                         break;
@@ -249,82 +240,7 @@ public class Field implements MineSweeper { //todo throws Illegal
 
 
         }// if
-            return (neighbors.size() > 8) ? null : neighbors; // If something go very wrong in size's return null
+        return (neighbors.size() > 8) ? null : neighbors; // If something go very wrong in size's return null
     }
 
-//===================================================================
-//Methods()
-
-
-  @Override
-  public String toString() {
-            return "area.Field{" +
-                    "area=" + Arrays.deepToString(area) +
-                ", n=" + n +
-                ", m=" + m +
-                    '}';
-        }
-
-
-    /**
-     * This method is showing game area/field on one square 2D
-     * This method is used to visualization field.
-     */
-    public void showField() {
-        //System.out.println("Length "+ area.length);
-        for(int i=0; i<n;i++){
-            for (int j=0; j<m;j++){
-                System.out.print(" " + area[i][j].value);
-//                System.out.print(" " + area[i][j].isMine);
-                }
-            System.out.println();
-            }
-
-    }
-
-    /**
-     * This method is ued to visualization 2d hint in corresponding area.
-     */
-    public void showHint() {
-        //System.out.println("Length " + area.length);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-
-                if (this.area[i][j].isMine) {
-                    System.out.print(" " + area[i][j].value);
-                } else
-                    System.out.print(" " + area[i][j].hintValue);
-
-
-            }
-            System.out.println();
-        }
-    }
-
-    /**
-     * This method is used to get finale hint of identical dimensions as the mineFiled()
-     * @return a string representation of the hint-field
-     */
-    public String showOutput() {
-        //System.out.println("Length " + area.length);
-        StringBuffer output = new StringBuffer((n * m) + n +12); // + 10
-        output.append("Hint-field:");
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-
-                if (this.area[i][j].isMine) {
-                    output.append("*");
-                }else{
-                    output.append(area[i][j].hintValue);
-                }
-            }
-            if (i < n-1){
-                output.append("\\n");// escape with \
-            }
-
-        }
-           return output.toString();
-    }
-
-}// End of area.Field
+}

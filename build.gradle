@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'groupId'
+version = '1.0-SNAPSHOT'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokVersion = "1.16.20"
+}
+
+dependencies {
+    compile "org.projectlombok:lombok:${lombokVersion}"
+    compile "org.apache.commons:commons-lang3:3.7"
+
+
+}
