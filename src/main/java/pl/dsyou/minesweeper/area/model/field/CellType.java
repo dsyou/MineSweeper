@@ -2,11 +2,11 @@ package pl.dsyou.minesweeper.area.model.field;
 
 /**
  * @author Dawid Janik
- * @since 09.09.2018
+ * @since 08.04.2018
  */
-public enum FieldType {
-    MINE("*"),
-    NORAML("");
+public enum CellType {
+    mine( "*"),
+    normal("");
 
     private String type;
 
@@ -21,7 +21,7 @@ public enum FieldType {
         return type;
     }
 
-    FieldType(String type) {
+    CellType(String type) {
         this.type = type;
     }
 }

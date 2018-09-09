@@ -1,4 +1,4 @@
-package pl.dsyou.minesweeper.engine.service;
+package pl.dsyou.minesweeper.engine;
 
 import pl.dsyou.minesweeper.engine.exception.MineFiledFormattedException;
 import pl.dsyou.minesweeper.engine.exception.MineFiledInitialisedException;
