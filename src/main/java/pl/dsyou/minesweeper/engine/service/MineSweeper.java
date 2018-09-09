@@ -1,4 +1,7 @@
-package pl.minesweeper.core;
+package pl.dsyou.minesweeper.engine.service;
+
+import pl.dsyou.minesweeper.engine.exception.MineFiledFormattedException;
+import pl.dsyou.minesweeper.engine.exception.MineFiledInitialisedException;
 
 /**
  * @author X-Formation
@@ -20,7 +23,7 @@ public interface MineSweeper {
      * @param mineField string containing the mines
      * @throws IllegalArgumentException if mineField is not properly formatted
      */
-    void setMineField(String mineField) throws IllegalArgumentException;
+    void setMineField(String mineField) throws MineFiledFormattedException;
     /**
      * Produces a hint-field of identical dimensions as the mineFiled() where each
      * square is a * for a mine or the number of adjacent mine-squares if the square does not contain a mine.
@@ -30,7 +33,7 @@ public interface MineSweeper {
      * @return a string representation of the hint-field
      * @throws IllegalStateException if the mine-field has not been initialised (i.e. setMineField() has not been called)
      */
-    String getHintField() throws IllegalStateException;
+    String getHintField() throws MineFiledInitialisedException;
 
 
 }
