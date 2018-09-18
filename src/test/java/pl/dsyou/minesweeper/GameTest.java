@@ -1,4 +1,4 @@
-package pl.dsyou.service;
+package pl.dsyou.minesweeper;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

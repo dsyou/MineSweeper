@@ -1,4 +1,4 @@
-package pl.dsyou.service;
+package pl.dsyou.minesweeper.service;
 
 /**
  * @author Dawid Janik

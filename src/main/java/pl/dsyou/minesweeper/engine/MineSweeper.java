@@ -5,7 +5,6 @@ import pl.dsyou.minesweeper.engine.exception.MineFiledInitialisedException;
 
 /**
  * @author X-Formation
- *
  * @since 2016-07-05
  */
 public interface MineSweeper {

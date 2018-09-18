@@ -1,4 +1,4 @@
-package pl.dsyou.minesweeper.area.model.field;
+package pl.dsyou.minesweeper.area;
 
 /**
  * @author Dawid Janik

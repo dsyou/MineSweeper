@@ -46,7 +46,7 @@ public class MineSweeperImpl implements MineSweeper {
         // Fill game pl.minesweeper.fields with proper value taken from input String
         for (int i = 0; i < height; i++) { // row
             for (int j = 0; j < width; j++) { // width
-
+                fields[i][j] = new Field();
                 char charAt = lines[i].charAt(j);
 
                 if (String.valueOf(charAt).equals("*")) {

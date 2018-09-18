@@ -19,6 +19,25 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    public void showGameArea() {
+        final GameArea gameArea = getGameAreaInstance();
+        final int column = gameArea.getColumn();
+        final int row = gameArea.getRow();
+
+        Field[][] fields = gameArea.getFields();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                boolean active = fields[i][j].isActive();
+                if (active) {
+                    log.info(" " + FieldType.MINE.toString());
+                } else {
+                    log.info(" " + FieldType.NORAML.toString());
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean checkIsMine(Field field) {
         return field.isActive();
     }
@@ -37,10 +56,14 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public void createGameArea(int height, int width) {
         GameArea area = getGameAreaInstance();
+        area.setColumn(width);
+        area.setRow(height);
         area.setFields(new Field[height][width]);
     }
 
     private GameArea getGameAreaInstance() {
         return GameArea.getInstance();
     }
+
+
 }

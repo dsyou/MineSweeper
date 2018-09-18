@@ -1,6 +1,7 @@
 package pl.dsyou.minesweeper.area.model.field;
 
 import lombok.*;
+import pl.dsyou.minesweeper.area.FieldType;
 
 /**
  * This class is simply object structure

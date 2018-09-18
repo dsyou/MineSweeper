@@ -13,6 +13,11 @@ public interface AreaService {
     GameArea getGameArea();
 
     /**
+     * This method is used to visualization field to UI console on one 2D square.
+     */
+    void showGameArea();
+
+    /**
      * Checking if current {@link Field} contains mine.
      *
      * @param field given current game field.

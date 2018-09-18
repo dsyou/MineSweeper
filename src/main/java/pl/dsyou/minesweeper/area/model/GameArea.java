@@ -28,18 +28,6 @@ public class GameArea {
     private GameArea() {
     }
 
-    /**
-     * This method is showing game pl.minesweeper.fields/field on one square 2D
-     * This method is used to visualization field.
-     */
-    public void showField() {
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                log.info(" " + fields[i][j].getFieldType());
-            }
-        }
-    }
-
     public static GameArea getInstance() {
         if (instance == null) {
             instance = new GameArea();
