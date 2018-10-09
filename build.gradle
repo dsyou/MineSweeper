@@ -35,7 +35,15 @@ dependencies {
     compile "org.projectlombok:lombok:${lombokVersion}"
     compile "org.apache.commons:commons-lang3:3.7"
     compile('org.springframework.boot:spring-boot-starter')
-    compile 'org.springframework.boot:spring-boot-starter-web'
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}
+
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
 }
