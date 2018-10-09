@@ -18,6 +18,26 @@ public class AreaServiceImpl implements AreaService {
         return getGameAreaInstance();
     }
 
+    private GameArea getGameAreaInstance() {
+        return GameArea.getInstance();
+    }
+
+    @Override
+    public void createGameArea(int height, int width) {
+        GameArea area = getGameAreaInstance();
+        area.setColumn(width);
+        area.setRow(height);
+        area.setFields(initFieldArray(height, width));
+    }
+
+    private Field[][] initFieldArray(int height, int width) {
+        Field[][] fields = new Field[height][width];
+        for (int row = 0; row < height; row++)
+            for (int col = 0; col < width; col++)
+                fields[row][col] = new Field();
+        return fields;
+    }
+
     @Override
     public void showGameArea() {
         final GameArea gameArea = getGameAreaInstance();
@@ -26,14 +46,16 @@ public class AreaServiceImpl implements AreaService {
 
         Field[][] fields = gameArea.getFields();
         for (int i = 0; i < row; i++) {
+            StringBuilder result = new StringBuilder();
             for (int j = 0; j < column; j++) {
                 boolean active = fields[i][j].isActive();
                 if (active) {
-                    log.info(" " + FieldType.MINE.toString());
+                    result.append("*");
                 } else {
-                    log.info(" " + FieldType.NORAML.toString());
+                    result.append(" ");
                 }
             }
+            log.info(String.valueOf(result));
         }
     }
 
@@ -43,27 +65,9 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public void updateField(Field field) {
-
-    }
-
-    @Override
     public void updateFields(Field[][] fields) {
         GameArea area = getGameAreaInstance();
         area.setFields(fields);
     }
-
-    @Override
-    public void createGameArea(int height, int width) {
-        GameArea area = getGameAreaInstance();
-        area.setColumn(width);
-        area.setRow(height);
-        area.setFields(new Field[height][width]);
-    }
-
-    private GameArea getGameAreaInstance() {
-        return GameArea.getInstance();
-    }
-
 
 }

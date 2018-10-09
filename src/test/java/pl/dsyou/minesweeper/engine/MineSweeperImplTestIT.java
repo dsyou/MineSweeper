@@ -7,11 +7,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.dsyou.minesweeper.area.AreaService;
 
+/**
+ * @author Dawid Janik
+ * @since 09.10.2018
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MineSweeperImplTest {
+public class MineSweeperImplTestIT {
 
-    private static String mineField = "*...\n..*.\n....";
+    private static final String MINEFIELD = "*...\n..*.\n....";
+
+    private static final String BAD_MINEFIELD = "*...\n..*.\n....";
 
     @Autowired
     private MineSweeper mineSweeper;
@@ -21,10 +27,12 @@ public class MineSweeperImplTest {
 
     @Test
     public void setMineField() {
-        mineSweeper.setMineField(mineField);
+        mineSweeper.setMineField(MINEFIELD);
 
         // get the output
         areaService.showGameArea();
+
+        // todo test with BAD_MINEFIELD
     }
 
     @Test

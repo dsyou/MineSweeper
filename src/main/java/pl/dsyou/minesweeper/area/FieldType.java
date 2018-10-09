@@ -6,7 +6,7 @@ package pl.dsyou.minesweeper.area;
  */
 public enum FieldType {
     MINE("*"),
-    NORAML("");
+    NORMAL("");
 
     private String type;
 

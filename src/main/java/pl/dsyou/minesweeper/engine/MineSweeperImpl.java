@@ -30,12 +30,12 @@ public class MineSweeperImpl implements MineSweeper {
      */
     @Override
     public void setMineField(String mineField) {
-
-        String[] lines = StringUtils.split(mineField, System.lineSeparator()); // Split Input string at \n character
+        // Split Input string at \n character
+        String[] lines = StringUtils.split(mineField, System.lineSeparator());
         checkMineFieldStructure(lines);
 
-        int height = lines.length;       // set the row
-        int width = lines[0].length();  // set the width
+        int height = lines.length;       //  row
+        int width = lines[0].length();  // column
         log.info("Square size n x m: " + height + " x " + width);
 
         log.info(" Create game pl.minesweeper.fields[n x m] with pl.minesweeper.fields.Field");
@@ -43,12 +43,10 @@ public class MineSweeperImpl implements MineSweeper {
 
         Field[][] fields = areaService.getGameArea().getFields();
 
-        // Fill game pl.minesweeper.fields with proper value taken from input String
+        // Fill game pl.minesweeper.fields with proper value taken from user input String
         for (int i = 0; i < height; i++) { // row
-            for (int j = 0; j < width; j++) { // width
-                fields[i][j] = new Field();
+            for (int j = 0; j < width; j++) { // column
                 char charAt = lines[i].charAt(j);
-
                 if (String.valueOf(charAt).equals("*")) {
                     fields[i][j].setActive(true); // e.g. * . . . \n
                 }

@@ -11,12 +11,10 @@ import pl.dsyou.minesweeper.area.FieldType;
  * @author Dawid Janik
  * @since 20.03.2018
  */
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Field {
 
     private FieldType fieldType;

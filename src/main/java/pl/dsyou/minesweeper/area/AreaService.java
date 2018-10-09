@@ -10,7 +10,18 @@ import pl.dsyou.minesweeper.area.model.field.Field;
  */
 public interface AreaService {
 
+    /**
+     * todo dj
+     * @return
+     */
     GameArea getGameArea();
+
+    /**
+     * todo dj
+     * @param height
+     * @param width
+     */
+    void createGameArea(int height, int width);
 
     /**
      * This method is used to visualization field to UI console on one 2D square.
@@ -26,14 +37,9 @@ public interface AreaService {
     boolean checkIsMine(Field field);
 
     /**
-     * Update current field
-     *
-     * @param field given current game field.
+     * todo dj
+     * @param field
      */
-    void updateField(Field field);
-
     void updateFields(Field[][] field);
-
-    void createGameArea(int height, int width);
 
 }

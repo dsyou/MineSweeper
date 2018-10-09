@@ -1,21 +1,20 @@
-package pl.dsyou.minesweeper;
+package pl.dsyou.minesweeper.area;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.dsyou.minesweeper.area.AreaService;
 import pl.dsyou.minesweeper.area.model.field.Field;
 
 import static org.junit.Assert.assertNotEquals;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class AreaCreateTest {
+public class AreaCreateTestIT {
 
-    private static int height = 10;
     private static int width = 10;
+    private static int height = 10;
 
     @Autowired
     private AreaService areaService;
