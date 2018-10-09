@@ -1,4 +1,4 @@
-package pl.dsyou.minesweeper.service;
+package pl.dsyou.minesweeper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
