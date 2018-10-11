@@ -93,6 +93,7 @@ gradle-app.setting
 ### Sonar ###
 #Sonar generated dir
 /.sonar/
+.idea/sonarlint/
 
 ### SonarQube ###
 # SonarQube ignore files.
