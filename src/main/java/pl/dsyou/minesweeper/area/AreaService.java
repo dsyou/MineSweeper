@@ -29,6 +29,11 @@ public interface AreaService {
     void showGameArea();
 
     /**
+     * todo dj
+     */
+    void  getGameAreaHints();
+
+    /**
      * Checking if current {@link Field} contains mine.
      *
      * @param field given current game field.

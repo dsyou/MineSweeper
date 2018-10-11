@@ -1,7 +1,9 @@
 package pl.dsyou.minesweeper.engine;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,6 +15,7 @@ import pl.dsyou.minesweeper.area.AreaService;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) // <-- !!
 public class MineSweeperImplTestIT {
 
     private static final String MINEFIELD = "*...\n..*.\n....";
@@ -26,7 +29,7 @@ public class MineSweeperImplTestIT {
     private AreaService areaService;
 
     @Test
-    public void setMineField() {
+    public void stage0_setMineField() {
         mineSweeper.setMineField(MINEFIELD);
 
         // get the output
@@ -36,6 +39,7 @@ public class MineSweeperImplTestIT {
     }
 
     @Test
-    public void getHintField() {
+    public void stage1_getHintField() {
+        mineSweeper.getHintField();
     }
 }

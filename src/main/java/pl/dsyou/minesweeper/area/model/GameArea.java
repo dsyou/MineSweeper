@@ -7,8 +7,8 @@ import pl.dsyou.minesweeper.area.model.field.Field;
 /**
  * <h1>Create game pl.minesweeper.fields/field</h1>
  * </p>
- * The pl.minesweeper.fields.model.GameArea Class implements an game field for this purpose
- * simply uses two-dimensional array of pl.minesweeper.fields.model.field.Field(the smallest unit of field)
+ * The  model.GameArea Class implements an game field for this purpose
+ * simply uses two-dimensional array of  model.field.Field(the smallest unit of field)
  *
  * @author Dawid Janik
  * @since 20.03.2018

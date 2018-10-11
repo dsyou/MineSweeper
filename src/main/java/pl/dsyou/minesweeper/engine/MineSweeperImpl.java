@@ -5,11 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pl.dsyou.minesweeper.area.AreaService;
+import pl.dsyou.minesweeper.area.FieldType;
+import pl.dsyou.minesweeper.area.model.GameArea;
 import pl.dsyou.minesweeper.area.model.field.Field;
 import pl.dsyou.minesweeper.engine.exception.MineFiledFormattedException;
 import pl.dsyou.minesweeper.engine.exception.MineFiledInitialisedException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Dawid Janik
@@ -38,7 +42,7 @@ public class MineSweeperImpl implements MineSweeper {
         int width = lines[0].length();  // column
         log.info("Square size n x m: " + height + " x " + width);
 
-        log.info(" Create game pl.minesweeper.fields[n x m] with pl.minesweeper.fields.Field");
+        log.info(" Create game pl.minesweeper.fields[n x m] with  Field");
         areaService.createGameArea(height, width);
 
         Field[][] fields = areaService.getGameArea().getFields();
@@ -97,35 +101,28 @@ public class MineSweeperImpl implements MineSweeper {
      * @throws IllegalStateException if the mine-field has not been initialised (i.e. setMineField() has not been called)
      */
     @Override
-    public String getHintField() throws MineFiledInitialisedException {
-
-//        if (area == null) {
-//            throw new IllegalArgumentException("Method setMineFiled() has not been called");
-//        }
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < m; j++) {
-//                List<Field> neighbors = getNeighbors(i, j); //Get neighbors surrounding current pl.minesweeper.fields.Field
-//                //System.out.println("L.size()"+l.size()); //Show me list.size() of incoming neighbors
-//                if (neighbors == null) {
-//                    log.error("Error Null Neighbors list"); // This situation should never happen
-//                    System.exit(-1); // Exit immediately
-//                }
-//
-//                if (neighbors.isEmpty()) { //Check list size: 0-mines, 8-no mine field
-//                    for (int n = 0; n < 8; n++) {
-//
-//                        if (neighbors.get(n).isMine) { // If the neighbor is Mine increment current field.hintValue
-//                            //System.out.println("Add +1");
-//                            this.area[i][j].hintValue = this.area[i][j].hintValue + 1;//++ ;
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//        return showOutput();
-        return null;
+    public void getHintField() {
+        final GameArea gameArea = areaService.getGameArea();
+        if (gameArea == null) {
+            throw new MineFiledInitialisedException("Method setMineFiled() has not been called");
+        }
+        final Field[][] fields = gameArea.getFields();
+        final int row = gameArea.getRow();
+        final int column = gameArea.getColumn();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                final Field currentField = fields[i][j];
+                List<Field> neighbors = getNeighbors(currentField, i, j).orElseThrow(RuntimeException::new);
+                if (neighbors.isEmpty()) { // Check list size: 0-mines, 8-no mine currentField
+                    for (int n = 0; n < 8; n++) {
+                        if (neighbors.get(n).isActive()) { // If the neighbor is Mine increment current currentField.hintValue
+                            currentField.setHintValue(currentField.getHintValue() + 1);
+                        }
+                    }
+                }
+            }
+        }
+      areaService.getGameAreaHints();
     }
 
     /**
@@ -133,114 +130,81 @@ public class MineSweeperImpl implements MineSweeper {
      * The return value is a list of neighbors.
      * It is Important to check size of list- mine_Cell is skipped.
      *
-     * @param i current row value
-     * @param j current column value
+     * @param currentField
+     * @param currentRow    value
+     * @param currentColumn value
      * @return list of neighbors
      */
-    private List<Field> getNeighbors(int i, int j) {
+    private Optional<List<Field>> getNeighbors(Field currentField, int currentRow, int currentColumn) {
 
-//        log.info("I=" + i + " J=" + j);
-//        List<Field> neighbors = new ArrayList<>();
-//
-//        if (this.area[i][j].isMine) {
-//            // Mine field return 0-elements list
-//            log.info("Left pl.minesweeper.fields.Field with Mine " + "I=" + i + " J=" + j);
-//        }
-//        if (!this.area[i][j].isMine) { // If not mine check neighbors
-//
-//            //Corresponding schema to take all 8 neighbors
-//            int left_x = j - 1;
-//            int right_x = j + 1;
-//            int top_y = i - 1;
-//            int bottom_y = i + 1;
-//
-//
-//            /**
-//             * Each field has 8 neighbors on game pl.minesweeper.fields.
-//             * If the field is on the edge (e.g [0,0]), and want take neighbor on the illegal position
-//             * Throw Exception, replace this neighbor with new pl.minesweeper.fields.Field (not-mine).
-//             * Non-periodic bound condition
-//             *
-//             * Position are:
-//             * 0 - left top; 1- central top; 2- right top; 3-right center;
-//             * 4- right bottom; 5-central bottom; 6-left bottom; 7-left bottom
-//             *
-//             * In polish:
-//             * 0 - lewa gorna; 1 - centralna gorna; 2 - prawa gorna; 3 - prawa
-//             * srodkowa 4 - prawa dolna; 5 - centralna dolna; 6 - lewa dolna;
-//             * 7 - lewa srodkowa
-//             */
-//            for (int ii = 0; ii < 8; ii++) {
-//                switch (ii) {
-//                    case 0:
-//                        try {
-//                            neighbors.add(new Field(this.area[top_y][left_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 0");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 1:
-//                        try {
-//                            neighbors.add(new Field(this.area[top_y][j]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 1");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 2:
-//                        try {
-//                            neighbors.add(new Field(this.area[top_y][right_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 2");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 3:
-//                        try {
-//                            neighbors.add(new Field(this.area[i][right_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 3");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 4:
-//                        try {
-//                            neighbors.add(new Field(this.area[bottom_y][right_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 4");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 5:
-//                        try {
-//                            neighbors.add(new Field(this.area[bottom_y][j]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 5");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 6:
-//                        try {
-//                            neighbors.add(new Field(this.area[bottom_y][left_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 6");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                    case 7:
-//                        try {
-//                            neighbors.add(new Field(this.area[i][left_x]));
-//                        } catch (ArrayIndexOutOfBoundsException e) {
-////                            System.out.println("pl.minesweeper.fields.Field 7");
-//                            neighbors.add(new Field());
-//                        }
-//                        break;
-//                }
-//            }
-//        }
-//        return (neighbors.size() > 8) ? null : neighbors; // If something go very wrong in size's return null
-        return null;
+        log.info("Row:{} Column:{}", currentRow, currentColumn);
+        List<Field> neighbors = new ArrayList<>();
+
+        if (currentField.getFieldType() == FieldType.MINE) {
+            log.info("Field is Mine");
+            // Mine field return 0-elements list
+        } else {
+            /**
+             * Each field has 8 neighbors on game
+             * If the field is on the edge (e.g [0,0]), and want take neighbor on the illegal position
+             * Throw Exception, replace this neighbor with new  Field (not-mine).
+             * Non-periodic bound condition
+             *
+             * Position are:
+             * 0 - left top; 1- central top; 2- right top; 3-right center;
+             * 4- right bottom; 5-central bottom; 6-left bottom; 7-left bottom
+             */
+            int leftX = currentColumn - 1;
+            int rightX = currentColumn + 1;
+            int topY = currentRow - 1;
+            int bottomY = currentRow + 1;
+            for (int neighborId = 0; neighborId < 8; neighborId++) {
+                switch (neighborId) {
+                    case 0:
+                        addNeighbors(neighbors, leftX, topY, "Field 0");
+                        break;
+                    case 1:
+                        addNeighbors(neighbors, currentColumn, topY, "Field 1");
+                        break;
+                    case 2:
+                        addNeighbors(neighbors, rightX, topY, "Field 2");
+                        break;
+                    case 3:
+                        addNeighbors(neighbors, rightX, currentRow, "Field 3");
+                        break;
+                    case 4:
+                        addNeighbors(neighbors, rightX, bottomY, "Field 4");
+                        break;
+                    case 5:
+                        addNeighbors(neighbors, currentColumn, bottomY, "Field 5");
+                        break;
+                    case 6:
+                        addNeighbors(neighbors, leftX, bottomY, "Field 6");
+                        break;
+                    case 7:
+                        addNeighbors(neighbors, leftX, currentRow, "Field 7");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return (neighbors.size() > 8) ? Optional.empty() : Optional.of(neighbors);
+    }
+
+    private List<Field> addNeighbors(List<Field> neighbors, int x, int y, String loggerMessage) {
+        try {
+            final Field field = areaService.getGameArea().getFields()[x][y];
+            neighbors.add(Field.builder()
+                    .hintValue(field.getHintValue())
+                    .fieldType(field.getFieldType())
+                    .active(field.isActive())
+                    .build());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            log.debug(loggerMessage);
+            neighbors.add(new Field());
+        }
+        return neighbors;
     }
 
 }

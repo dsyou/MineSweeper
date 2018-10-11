@@ -16,10 +16,8 @@ import pl.dsyou.minesweeper.area.FieldType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Field {
-
     private FieldType fieldType;
     private int hintValue;
 
     private boolean active;
-
 }

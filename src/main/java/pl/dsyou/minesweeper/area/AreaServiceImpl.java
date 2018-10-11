@@ -60,6 +60,23 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    public void getGameAreaHints() {
+        final GameArea gameArea = getGameAreaInstance();
+        final int column = gameArea.getColumn();
+        final int row = gameArea.getRow();
+
+        Field[][] fields = gameArea.getFields();
+        for (int i = 0; i < row; i++) {
+            StringBuilder result = new StringBuilder();
+            for (int j = 0; j < column; j++) {
+                final int hintValue = fields[i][j].getHintValue();
+                    result.append(hintValue);
+            }
+            log.info(String.valueOf(result));
+        }
+    }
+
+    @Override
     public boolean checkIsMine(Field field) {
         return field.isActive();
     }

@@ -11,7 +11,7 @@ public interface MineSweeper {
 
     /**
      * Initialises the field
-     *
+     * <p>
      * A mine-field of N x M squares is represented by N lines of exactly M characters each.
      * The character '*' represents a mine * and the character '.' represents no-mine.
      * Lines are separated by '\n'
@@ -23,6 +23,7 @@ public interface MineSweeper {
      * @throws IllegalArgumentException if mineField is not properly formatted
      */
     void setMineField(String mineField) throws MineFiledFormattedException;
+
     /**
      * Produces a hint-field of identical dimensions as the mineFiled() where each
      * square is a * for a mine or the number of adjacent mine-squares if the square does not contain a mine.
@@ -32,7 +33,6 @@ public interface MineSweeper {
      * @return a string representation of the hint-field
      * @throws IllegalStateException if the mine-field has not been initialised (i.e. setMineField() has not been called)
      */
-    String getHintField() throws MineFiledInitialisedException;
-
+    void getHintField() throws MineFiledInitialisedException;
 
 }
